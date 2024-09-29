@@ -1,0 +1,42 @@
+{
+  "name": "Azure Functions With Azrite",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces",
+  "forwardPorts": [7071, 10000, 10001, 10002],
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/jlaundry/devcontainer-features/azure-functions-core-tools:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "extensions.verifySignature": false,
+        "jest.runMode": "deferred"
+      },
+      "extensions": [
+        "ms-azuretools.vscode-azurefunctions",
+        "dbaeumer.vscode-eslint",
+        "firsttris.vscode-jest-runner",
+        "Orta.vscode-jest",
+        "GitHub.copilot",
+        "esbenp.prettier-vscode",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "oderwat.indent-rainbow"
+      ]
+    },
+    "settings": {
+      "files.encoding": "utf8",
+      "files.eol": "\\n",
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "workbench.iconTheme": "material-icon-theme",
+      "": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+  "postCreateCommand": "npm install"
+}

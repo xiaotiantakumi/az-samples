@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    networks:
+      - my_sample_network
+    container_name: my_app
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    restart: unless-stopped
+    networks:
+      - my_sample_network
+    container_name: my_azurite
+    ports:
+      - 127.0.0.1:10000:10000
+      - 127.0.0.1:10001:10001
+      - 127.0.0.1:10002:10002
+
+networks:
+  my_sample_network:
+    driver: bridge
