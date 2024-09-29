@@ -1,0 +1,140 @@
+{
+  "info": {
+    "title": "Azure Function Swagger v3.1 demo",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7071"
+    }
+  ],
+  "openapi": "3.1.0",
+  "paths": {
+    "/httpTrigger": {
+      "get": {
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets a message from the Function",
+            "content": {
+              "application/json": {
+                "example": "Hello World. This is a HTTP triggered function executed successfully."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/httpTrigger2": {
+      "get": {
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "param3",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets a message from the Function",
+            "content": {
+              "application/json": {
+                "example": "Hello World. This is a HTTP triggered function executed successfully."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/httpTrigger3": {
+      "get": {
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "description": "Name of the person to greet"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets a greeting message",
+            "content": {
+              "application/json": {
+                "example": "Hello, {name}!"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "requestBody": {
+          "description": "Request body for creating a new greeting",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "minLength": 5,
+                    "maxLength": 200
+                  }
+                },
+                "required": [
+                  "message"
+                ]
+              },
+              "example": {
+                "message": "Hello, new world!"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates and returns a new greeting message",
+            "content": {
+              "application/json": {
+                "example": "New greeting created!"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

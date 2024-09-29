@@ -1,0 +1,52 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/src/functions/*.js",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc -p tsconfig-exclude-test.json && npm run copy-files ",
+    "watch": "tsc -p tsconfig-exclude-test.json -w",
+    "prestart": "npm run build",
+    "start": "npm run copy-files && concurrently npm:start:*",
+    "start:tsc": "tsc -w --preserveWatchOutput -p tsconfig-exclude-test.json",
+    "start:func": "nodemon --watch dist --delay 1 --exec \"func start --cors http://localhost:8080 http://localhost:8081 http://localhost:7071\"",
+    "test": "jest --silent --json --outputFile=coverage/test_result.json",
+    "pretest:dev": "docker compose up --build -d  --wait && ./wait-for-db.sh",
+    "test:dev": "jest",
+    "posttest:dev": "docker compose down",
+    "fix": "npm run prettier && npm run eslint",
+    "eslint": "eslint --cache --fix ./",
+    "prettier": "prettier --write ./",
+    "copy-files": "copyfiles ./templates/* ./dist/",
+    "docs": "js-yaml ./docs/swagger/document.yaml > ./docs/swagger/document.json && prettier --write docs/swagger",
+    "swagger": "lsof -ti :8080 | xargs kill && swagger-codegen generate -i ./docs/swagger/document.yaml -l nodejs-server -o ./docs/swagger && npm --prefix ./docs/swagger install && node docs/swagger/index.js",
+    "env-local": "cp local.settings.local.json local.settings.json && npm run swagger",
+    "env-remote": "cp local.settings.remote.json local.settings.json && npm run swagger"
+  },
+  "devDependencies": {
+    "@azure/functions": "^4.4.0",
+    "@types/ajv": "^1.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
+    "azure-functions-core-tools": "^4.x",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.6",
+    "js-yaml": "^4.1.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.23.4"
+  }
+}
