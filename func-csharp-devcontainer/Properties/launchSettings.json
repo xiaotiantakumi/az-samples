@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "func_csharp_devcontainer": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7178",
+      "launchBrowser": false
+    }
+  }
+}
